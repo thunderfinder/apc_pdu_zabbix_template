@@ -86,7 +86,9 @@ The dashboard includes:
 
 ## 👨‍💻 Author
 
-Developed by [@thunderfinder](https://github.com/thunderfinder)
+DEVELOPED by [@abaldakin](https://github.com/zabbix/community-templates/blob/main/Power_(UPS)/APC/template_apc_pdu_new_snmp/6.0/template_apc_pdu_new_snmp.yaml)
+
+MODDED by [@thunderfinder](https://github.com/thunderfinder) + CHATGPT MODEL 4o
 
 Feel free to contribute or open an issue if you find improvements.
 
