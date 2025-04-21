@@ -1,202 +1,89 @@
-# apc_pdu_zabbix_template
+# 🧰 Zabbix Template para PDU APC (SNMPv3)
 
-📦 Estructura del Repositorio
+Este repositorio contiene plantillas listas para usar en Zabbix 7 para monitorear **PDUs de APC** a través de **SNMPv3**, utilizando información del fabricante y buenas prácticas recomendadas por expertos.
 
-apc_pdu_zabbix_template/
-├── README.md
-├── templates/
-│   └── template_apc_pdu.xml
-└── mibs/
-│    └── powernet457_apc_pdu_check.mib
-└── dashboads/
-     └── zabbix_apc_pdu_dashboard.json
-    
-
-🧩 Contenido del Template
-Ítems Monitoreados
-
-El template incluye los siguientes ítems clave:​
-
-    Carga por banco (Amperios): rPDU2BankStatusCurrent
-
-        OID: .1.3.6.1.4.1.318.1.1.26.8.3.1.5
-
-        Unidad: Amperios (A)
-
-    Estado de carga por banco: rPDU2BankStatusLoadState
-
-        OID: .1.3.6.1.4.1.318.1.1.26.8.3.1.4
-
-        Valores posibles: lowLoad, normal, nearOverload, overload
-
-    Estado de carga del dispositivo: rPDU2DeviceStatusLoadState
-
-        OID: .1.3.6.1.4.1.318.1.1.26.4.3.1.4
-
-    Consumo de potencia (kW): rPDU2DeviceStatusPower
-
-        OID: .1.3.6.1.4.1.318.1.1.26.4.3.1.5
-
-        Unidad: kilovatios (kW)
-
-    Energía consumida (kWh): rPDU2DeviceStatusEnergy
-
-        OID: .1.3.6.1.4.1.318.1.1.26.4.3.1.9
-
-        Unidad: kilovatios-hora (kWh)
-
-    Temperatura ambiente: rPDU2SensorTemp
-
-        OID: .1.3.6.1.4.1.318.1.1.26.10.2.3.1.3
-
-        Unidad: grados Celsius (°C)
-
-    Humedad relativa: rPDU2SensorHumidity
-
-        OID: .1.3.6.1.4.1.318.1.1.26.10.2.3.1.4
-
-        Unidad: porcentaje (%)​
-
-Estos OIDs están documentados en las fuentes oficiales de APC.
-apc.com
-​
-Triggers Configurados
-
-Se han establecido triggers con umbrales genéricos basados en recomendaciones del fabricante y expertos en electricidad:​
-
-    Carga por banco > 80%: Alerta de sobrecarga inminente.
-
-    Temperatura ambiente > 35 °C: Riesgo de sobrecalentamiento.
-
-    Humedad relativa > 70%: Posible condensación en el equipo.​
-
-🔐 Configuración de SNMPv3
-
-Para utilizar SNMPv3 en Zabbix, asegúrate de configurar los siguientes parámetros en el host:​
-
-    Versión SNMP: v3
-
-    Nombre de usuario: power
-
-    Nivel de seguridad: authPriv
-
-    Protocolo de autenticación: SHA
-
-    Contraseña de autenticación: powerapc
-
-    Protocolo de privacidad: AES
-
-    Contraseña de privacidad: powerapc​
-
-Estos valores son ejemplos y deben ajustarse según la configuración de tu PDU.
-community.se.com
-​
-📄 Archivo README.md
-
-El archivo README.md incluye:​
-
-    Descripción del template y su propósito.
-
-    Instrucciones para importar el template en Zabbix.
-
-    Guía para configurar SNMPv3 en Zabbix.
-
-    Referencias a la documentación oficial de APC.​
-
-🚀 Próximos Pasos
-
-    Clona o descarga el repositorio desde GitHub.
-
-    Importa el template en Zabbix a través de la interfaz web (Configuration → Templates → Import).
-
-    Asocia el template al host correspondiente 
-
-    Verifica la recolección de datos en Monitoring → Latest data.​
-
-
-
-    # Zabbix Template – APC PDU SNMPv3
-
-Este repositorio contiene dos templates para **Zabbix 7** diseñados para monitorear **PDUs APC** mediante **SNMPv3**, basados en el MIB oficial de APC (PowerNet MIB).
+---
 
 ## 📦 Contenido
 
-- `template_apc_pdu.xml`: Versión básica con monitoreo de parámetros clave.
-- `template_apc_pdu_improved.xml`: Versión mejorada con macros, gráficos, y mapas de valores.
+- `template_apc_pdu_improved_fixed.xml`: Plantilla sin value maps (usar junto a importación separada de mapas).
+- `template_apc_pdu_improved_with_embedded_valuemaps.xml`: Plantilla con value maps integrados.
+- `template_apc_pdu_improved_with_embedded_valuemaps_with_triggers_lld_with_prototypes.xml`: Plantilla completa con:
+  - Value maps
+  - Triggers
+  - LLD (descubrimiento automático)
+  - Prototipos de ítems y triggers
+- `value_map_apc_pdu_load_state.xml`: Mapa de valores "Load State Map" para estados de carga.
+- `zabbix_apc_pdu_dashboard.json`: Dashboard para visualización en tiempo real.
 
 ---
 
-## 🚀 Características
+## 🧠 Triggers y Detección Automática (LLD)
 
-### 🧰 Template Básico (`template_apc_pdu.xml`)
+### Triggers Globales
 
-Monitorea:
+| Nombre                             | Condición                                                    | Severidad |
+|------------------------------------|---------------------------------------------------------------|-----------|
+| High Temperature                   | Temperatura > `{$TEMP_HIGH}`                                  | High      |
+| High Humidity                      | Humedad > `{$HUMIDITY_HIGH}`                                  | Average   |
+| Load nearing overload              | Estado de carga = Near Overload (3)                           | Average   |
+| PDU Overload                       | Estado de carga = Overload (4)                                | Disaster  |
 
-- Corriente por banco (`A`)
-- Estado de carga del banco y del dispositivo
-- Potencia (`kW`)
-- Energía acumulada (`kWh`)
-- Temperatura ambiente (`°C`)
-- Humedad relativa (`%`)
+### Descubrimiento de Bancos (LLD)
 
-### 💡 Template Mejorado (`template_apc_pdu_improved.xml`)
+La plantilla detecta automáticamente los bancos de carga mediante OID SNMP y crea:
 
-Incluye todo lo anterior, más:
+- **Item prototipo:** corriente por banco (Amperios)
+- **Trigger prototipo:** alerta si se supera el umbral `{$BANK_LOAD_HIGH}` por banco
 
-- ✅ **Macros configurables**:
-  - `{$TEMP_HIGH}` = 35°C
-  - `{$HUMIDITY_HIGH}` = 70%
-  - `{$LOAD_THRESHOLD}` = 80%
-- 📈 **Gráficos prediseñados**:
-  - Corriente y potencia
-- 🔤 **Mapas de valores** para interpretar el estado de carga:
-  - 1 = Bajo
-  - 2 = Normal
-  - 3 = Cerca de sobrecarga
-  - 4 = Sobrecarga
+### Personalización de Umbrales
+
+Macros definibles por host:
+
+- `{$TEMP_HIGH}` → Temperatura máxima (ej. `40`)
+- `{$HUMIDITY_HIGH}` → Humedad máxima (ej. `70`)
+- `{$BANK_LOAD_HIGH}` → Corriente máxima por banco (ej. `15`)
 
 ---
 
-## ⚙️ Requisitos
+## 📊 Dashboard
 
-- Zabbix 7.0 o superior
-- Acceso SNMPv3 configurado a la PDU APC
-- Comunidad SNMP o credenciales v3 (no incluidas por seguridad)
+Incluye:
 
----
+- Honeycombs por estado de PDU
+- Gráficos de corriente, carga, temperatura y humedad
+- Vista de problemas recientes
 
-## 📥 Importación
-
-1. Accede a Zabbix → **Configuration** → **Templates**
-2. Haz clic en **Import**
-3. Selecciona uno de los archivos `.xml`
-4. Revisa y confirma la importación
+Importa `zabbix_apc_pdu_dashboard.json` desde:
+```
+Zabbix → Dashboards → Import
+```
 
 ---
 
-## 🧠 Recomendaciones
+## 🚀 Requisitos
 
-- Asocia este template a hosts que representen tus PDUs APC.
-- Ajusta las macros si tus umbrales de operación son diferentes.
-- Monitorea las gráficas para observar tendencias y prevenir fallas.
-
----
-
-## 🔒 Seguridad
-
-Este template está optimizado para **SNMPv3**, que proporciona autenticación y cifrado. Se recomienda evitar SNMPv1 o v2c en entornos de producción.
+- Zabbix 7.0+
+- SNMPv3 configurado en el host (ej: IP `192.168.20.25`)
+- Modelo APC compatible con MIB PowerNet457
 
 ---
 
-## 🧾 Fuente MIB
+## 🛠️ Créditos
 
-Basado en `powernet457_apc_pdu_check.mib` proporcionado por Schneider Electric (APC).
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Puedes usarlo, modificarlo y distribuirlo libremente.
+Desarrollado a partir de [PowerNet MIB 4.5.7 de APC], documentación de Schneider Electric, y recomendaciones de foros especializados (Reddit, Zabbix, ServerFault).
 
 ---
 
+## 📂 Estructura de carpetas
+
+```
+apc_pdu_zabbix_template/
+├── templates/
+│   ├── template_apc_pdu_improved_fixed.xml
+│   ├── template_apc_pdu_improved_with_embedded_valuemaps.xml
+│   └── template_apc_pdu_improved_with_embedded_valuemaps_with_triggers_lld_with_prototypes.xml
+├── value_map_apc_pdu_load_state.xml
+├── zabbix_apc_pdu_dashboard.json
+└── README.md
+```
