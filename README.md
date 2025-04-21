@@ -3,20 +3,13 @@
 📦 Estructura del Repositorio
 
 apc_pdu_zabbix_template/
-
 ├── README.md
-
 ├── templates/
-
 │   └── template_apc_pdu.xml
-
 └── mibs/
-
 │    └── powernet457_apc_pdu_check.mib
-
 └── dashboads/
-
-    └── zabbix_apc_pdu_dashboard.json
+     └── zabbix_apc_pdu_dashboard.json
     
 
 🧩 Contenido del Template
