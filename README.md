@@ -1,4 +1,4 @@
-# 🧰 Zabbix Template para PDU APC (SNMPv3)
+# 🧰 Zabbix Template para PDU APC (SNMPv3) CHATGPT BUILD
 
 Este repositorio contiene plantillas listas para usar en Zabbix 7 para monitorear **PDUs de APC** a través de **SNMPv3**, utilizando información del fabricante y buenas prácticas recomendadas por expertos.
 
