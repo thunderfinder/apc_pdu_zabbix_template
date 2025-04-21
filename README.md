@@ -64,7 +64,7 @@ Zabbix → Dashboards → Import
 ## 🚀 Requisitos
 
 - Zabbix 7.0+
-- SNMPv3 configurado en el host (ej: IP `192.168.20.25`)
+- SNMPv3 configurado en el host (ej: IP `192.168.x.x`)
 - Modelo APC compatible con MIB PowerNet457
 
 ---
