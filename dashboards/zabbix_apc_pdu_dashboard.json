@@ -1,0 +1,86 @@
+{
+    "title": "Estado de PDUs APC",
+    "display_period": 3600,
+    "auto_start": true,
+    "pages": [
+        {
+            "widgets": [
+                {
+                    "type": "honeycomb",
+                    "name": "Estado General de PDUs",
+                    "x": 0,
+                    "y": 0,
+                    "width": 12,
+                    "height": 8,
+                    "fields": {
+                        "type": "problem",
+                        "filter": {
+                            "tags": [
+                                {
+                                    "tag": "type",
+                                    "value": "PDU",
+                                    "operator": "0"
+                                }
+                            ]
+                        },
+                        "view_mode": "1",
+                        "severity_min": 0,
+                        "show_problem_name": true
+                    }
+                },
+                {
+                    "type": "graph",
+                    "name": "Corriente por Banco",
+                    "x": 0,
+                    "y": 8,
+                    "width": 6,
+                    "height": 4,
+                    "fields": {
+                        "itemids": [],
+                        "show_legend": true,
+                        "show_triggers": true
+                    }
+                },
+                {
+                    "type": "graph",
+                    "name": "Potencia Total",
+                    "x": 6,
+                    "y": 8,
+                    "width": 6,
+                    "height": 4,
+                    "fields": {
+                        "itemids": [],
+                        "show_legend": true,
+                        "show_triggers": true
+                    }
+                },
+                {
+                    "type": "graph",
+                    "name": "Temperatura y Humedad",
+                    "x": 0,
+                    "y": 12,
+                    "width": 6,
+                    "height": 4,
+                    "fields": {
+                        "itemids": [],
+                        "show_legend": true,
+                        "show_triggers": true
+                    }
+                },
+                {
+                    "type": "problems",
+                    "name": "\u00daltimos Problemas",
+                    "x": 6,
+                    "y": 12,
+                    "width": 6,
+                    "height": 4,
+                    "fields": {
+                        "show_tags": true,
+                        "hostids": [],
+                        "severity_min": 0
+                    }
+                }
+            ]
+        }
+    ]
+}
