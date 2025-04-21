@@ -1,0 +1,141 @@
+{
+  "zabbix_export": {
+    "version": "7.0",
+    "date": "2025-04-21T22:01:13Z",
+    "dashboards": [
+      {
+        "uuid": "7e4961c3110344d48e4ea33f81db4ebb",
+        "name": "Dashboard EPDU1116M - Vista General",
+        "display_period": "3600",
+        "auto_start": true,
+        "widgets": [
+          {
+            "type": "problem",
+            "name": "Problemas Activos",
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 4,
+            "fields": [
+              {
+                "type": "show_tags",
+                "name": "show_tags",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "type": "graph_classic",
+            "name": "Carga Total y Bancos",
+            "x": 12,
+            "y": 0,
+            "width": 12,
+            "height": 4,
+            "fields": [
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "rPDULoadStatusLoad.1"
+              },
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "rPDULoadStatusLoad.2"
+              },
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "rPDULoadStatusLoad.3"
+              },
+              {
+                "type": "graph_type",
+                "name": "graph_type",
+                "value": "normal"
+              }
+            ]
+          },
+          {
+            "type": "graph_classic",
+            "name": "Voltaje de Entrada",
+            "x": 0,
+            "y": 4,
+            "width": 12,
+            "height": 4,
+            "fields": [
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "rPDUInletVoltage.1"
+              },
+              {
+                "type": "graph_type",
+                "name": "graph_type",
+                "value": "normal"
+              }
+            ]
+          },
+          {
+            "type": "graph_classic",
+            "name": "Temperatura y Humedad Ambiente",
+            "x": 12,
+            "y": 4,
+            "width": 12,
+            "height": 4,
+            "fields": [
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "pdu.ambient.temperature"
+              },
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "pdu.ambient.humidity"
+              },
+              {
+                "type": "graph_type",
+                "name": "graph_type",
+                "value": "normal"
+              }
+            ]
+          },
+          {
+            "type": "stat",
+            "name": "Energ\u00eda Acumulada (kWh)",
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 3,
+            "fields": [
+              {
+                "type": "item_tag",
+                "name": "name",
+                "value": "pdu.energy.total"
+              },
+              {
+                "type": "show_last_value",
+                "name": "show_last_value",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "type": "clock",
+            "name": "Hora Local",
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 3,
+            "fields": [
+              {
+                "type": "timezone",
+                "name": "timezone",
+                "value": "local"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
